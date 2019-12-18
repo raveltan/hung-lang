@@ -21,13 +21,19 @@ In order for Hung to be run on certain machine please make sure that these deped
 4. LLC (LLVM static compiler)
 5. GCC 
 
-### Install & Run (UNIX)
+### Install & Compile (UNIX)
 Clone The Git Repo to your local machine and go inside the clone folder
 ```bash 
 git clone https://github.com/raveltan/hung-lang.git
 cd hung-lang
+```
+File.hung is the file that is going to be compiled to machine code.
+Edit this file and save it
+To compile your code, run this following command
+```bash
 python3 main.py
 ```
+A new file called output will be available on the output folder, this is the generated executable
 
 ## Known Bugs
 TBA

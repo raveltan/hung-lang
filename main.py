@@ -3,7 +3,7 @@ from parser import Parser
 from codegen import CodeGen
 import os
 
-fname = "example.hung"
+fname = "file.hung"
 with open(fname) as f:
     text_input = f.read()
 
