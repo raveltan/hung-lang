@@ -25,6 +25,6 @@ TBA
 ## Known Bugs
 TBA
 
-## Unimplemented Features
-TBA
+## Implemented Features
+1.Lexer
 
