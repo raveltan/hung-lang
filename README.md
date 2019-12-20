@@ -15,7 +15,8 @@ Hung are currently available as technology preview. We have not even reach alpha
 
 ### Requirements
 In order for Hung to be run on certain machine please make sure that these depedencies are satisfied:
-1. Python 3(Tested on Python 3.7.4)
+1. Python 3
+2. Termcolor ^ 1.1.0
 
 
 ### Install & Run
