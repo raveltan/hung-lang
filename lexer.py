@@ -6,6 +6,8 @@ class Lexer:
         self.__add_tokens()
     #Add tokens that can be read by the lexer
     def __add_tokens(self):
+         #Add float as a token
+        self.lg.add('FLOAT',r'\d+\.\d+')
         #Add all digits as a token
         self.lg.add('NUM',r'\d+')
         #Add binary operators as a token
@@ -15,6 +17,10 @@ class Lexer:
         self.lg.add('DIV',r'\/')
         #ignore white spaces from being tokenized
         self.lg.ignore(r'\s+')
+        #Add EOL as a token
+        #
+        # TODO: Add to EOL TOKEN
+        #
         #Add semicolon as end of statement
         self.lg.add('END',r'\;')
         #Add parentheses as a token
