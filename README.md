@@ -13,12 +13,6 @@ Hung are currently available as technology preview. We have not even reach alpha
 ## Installation Guide
 >Hung is a programming language built on top of python, the main requirement is the python itself.
 
-### Requirements
-In order for Hung to be run on certain machine please make sure that these depedencies are satisfied:
-1. Python 3
-2. Termcolor ^ 1.1.0
-
-
 ### Install & Run
 TBA
 
@@ -26,5 +20,16 @@ TBA
 TBA
 
 ## Implemented Features
-1.Lexer
+1. Lexer
+2. Error Handling
+3. Parser (AST generator)
+
+## Unimplemented Features
+1. Interpreter
+2. Variable
+3. Conditional Statements
+4. Loops
+5. Functions
+6. import statements
+7. Multiline supports
 
