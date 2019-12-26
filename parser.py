@@ -7,6 +7,7 @@ class Number:
 
     def __repr__(self):
         return f"{self.token}"
+        #return '(N)'
 
 
 class BinaryOperator:
@@ -17,6 +18,7 @@ class BinaryOperator:
 
     def __repr__(self):
         return f"(B|{self.left}, {self.operator}, {self.right})"
+        #return f'({self.left},B,{self.right})'
 
 
 class UnaryOperator:
@@ -26,6 +28,7 @@ class UnaryOperator:
 
     def __repr__(self):
         return f"(U|{self.operator},{self.right})"
+        #return f'(U{self.right})'
 
 
 # Parser
@@ -47,7 +50,7 @@ class Parser:
 
     def parse(self):
         result = self.level_3()
-        return result if self.error == None else self.error
+        return (result,None) if self.error == None else (None,self.error)
 
     def level_1(self):
         temp_token = self.current_token
@@ -86,6 +89,8 @@ class Parser:
                 return expr
             else:
                 self.error = error.UnknownSyntax(self.file_name,'Expected ")"',self.position,1,self.text)
+        else:
+            self.error = error.UnknownSyntax(self.file_name,f'{self.current_token} is unexpected',self.position,1,self.text)
 
     def level_2(self):
         return self.binary_operator(self.level_1, (lexer.K_MUL, lexer.K_DIV))
@@ -110,11 +115,8 @@ class Parser:
                     self.text,
                 )
             left = BinaryOperator(left, current_operator_token, right)
+        if self.current_token.data_type in (lexer.K_LPAREN):
+            self.error = error.UnknownSyntax(self.file_name,'Misplacement of "(" or ")"',self.position+1,1,self.text)
         return left
 
-
-text = "1+(1+2)"
-t = lexer.Lexer(text, "a").get_tokens()
-
-print(Parser(t[0], "fas", text).parse() if t[0] != None else t[1])
 

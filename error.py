@@ -17,3 +17,7 @@ class IllegalSyntax(Error):
 class UnknownSyntax(Error):
     def __init__(self,file_name,desc,cursor,line,text):
         super().__init__('Unknown Syntax',file_name,desc,cursor,line,text)
+
+class RuntimeError(Error):
+    def __init__(self,file_name,desc,cursor,line,text):
+        super().__init__('Run Time Error',file_name,desc,cursor,line,text)
