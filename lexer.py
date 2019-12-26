@@ -1,63 +1,80 @@
-import token
+#imports
 import error
-import postition
 
-DIGITS = '0123456789'
+#Const
+T_NUM = 'NUM'
+T_STR = 'STRING'
 
+K_LPAREN = 'LPAREN'
+K_RPAREN = 'RPAREN'
+K_END = 'END'
+K_ADD = 'ADD'
+K_MIN = 'MIN'
+K_MUL = 'MUL'
+K_DIV = 'DIV'
+
+F_LOG = 'LOG'
+
+S_EOF = 'EOF'
+
+#Token
+class Token:
+    def __init__(self, data_type,value,start):
+        self.data_type = data_type
+        self.start = start
+        self.value = value
+    def __repr__(self):
+        return f'Token({self.data_type},{self.value})'
+
+#Lexer
 class Lexer:
-    def __init__(self,file_name,text):
-        self.text = text
+    def __init__(self,text:str,file_name):
+        self.line = 1 #TODO: FIX MULTILINE SUPPORT
         self.file_name = file_name
-        self.position = postition.Position(-1,0,-1,file_name,text) 
-        self.current_char = None
+        self.raw = text
+        self.position = -1
+        self.current = None
         self.next()
-
+    
     def next(self):
-        self.position.next(self.current_char)
-        self.current_char = self.text[self.position.index] if self.position.index < len(self.text) else None
-
-    def make_tokens(self):
-        tokens:[token.Token] = []
-        while not self.current_char == None:
-            if self.current_char in ' \t':
-                self.next()
-            elif self.current_char in DIGITS:
-                tokens.append(self.make_numbers())
-            elif self.current_char == '+':
-                tokens.append(token.Token(token.TT_ADD))
-                self.next()
-            elif self.current_char == '-':
-                tokens.append(token.Token(token.TT_SUB))
-                self.next()
-            elif self.current_char == '*':
-                tokens.append(token.Token(token.TT_MUL))
-                self.next()
-            elif self.current_char == '/':
-                tokens.append(token.Token(token.TT_DIV))
-                self.next()
-            elif self.current_char == '(':
-                tokens.append(token.Token(token.TT_OPEN_PAREN))
-                self.next()
-            elif self.current_char == ')':
-                tokens.append(token.Token(token.TT_CLOSE_PAREN))
-                self.next()
+        #TODO: Change implementation when applying multiline support
+        self.position += 1
+        self.current = self.raw[self.position] if self.position < len(self.raw) else None
+    
+    def get_tokens(self):
+        tokens = []
+        while self.current != None:
+            if self.current == '+':
+                tokens.append(Token(K_ADD,'OPERATOR',self.position))
+            elif self.current == '-':
+                tokens.append(Token(K_MIN,'OPERATOR',self.position))
+            elif self.current == '(':
+                tokens.append(Token(K_LPAREN,'OPERATOR',self.position))
+            elif self.current == ')':
+                tokens.append(Token(K_RPAREN,'OPERATOR',self.position))
+            elif self.current == '*':
+                tokens.append(Token(K_MUL,'OPERATOR',self.position))
+            elif self.current == '/':
+                tokens.append(Token(K_DIV,'OPERATOR',self.position))
+            elif self.current == ';':
+                tokens.append(Token(K_END,'END',self.position))
+            elif self.current == ' ':
+                pass
+            elif self.current in '0123456789':
+                num = ''
+                decimal_point_count = 0
+                while str(self.current) in '.0123456789':
+                    if str(self.current) == '.':
+                        if decimal_point_count == 1: 
+                            return None,error.IllegalSyntax(self.file_name,f"more than 1 decimal point found",self.position,self.line,self.raw)
+                        decimal_point_count+=1
+                    num += self.current
+                    self.next()
+                tokens.append(Token(T_NUM,float(num),self.position))
+                continue
             else:
-                position_start = self.position.copy()
-                char = self.current_char
-                self.next()
-                return [],error.IllegalCharacterError(position_start,self.position,"'"+char+"'")
-
+                return None,error.UnknownSyntax(self.file_name,f"'{self.current}' is unexpected",self.position,self.line,self.raw)
+            self.next()
+        tokens.append(Token(S_EOF,'EOF',self.position))
         return tokens,None
 
-    def make_numbers(self):
-        number_string = ''
-        dot_count = 0
-        while self.current_char != None and self.current_char in DIGITS + '.':
-            if self.current_char == '.':
-                if dot_count == 1: break
-                dot_count+=1
-                number_string += '.'
-            else : number_string += self.current_char
-            self.next()
-        if dot_count == 0 : return token.Token(token.TT_NUM,int(number_string))
-        else : return token.Token(token.TT_FLOAT,float(number_string))
