@@ -1,5 +1,6 @@
 #imports
 import error
+import string
 
 #Const
 T_NUM = 'NUM'
@@ -9,13 +10,22 @@ K_LPAREN = 'LPAREN'
 K_RPAREN = 'RPAREN'
 K_END = 'END'
 K_ADD = 'ADD'
+K_EQUAL = 'EQUAL'
 K_MIN = 'MIN'
 K_MUL = 'MUL'
 K_DIV = 'DIV'
+K_IDENTIFIER = 'IDENTIFIER'
+K_KEYWORD = 'KEYWORD'
+
+K_RESERVED = [
+    'var'
+] 
 
 F_LOG = 'LOG'
 
 S_EOF = 'EOF'
+
+
 
 #Token
 class Token:
@@ -52,6 +62,8 @@ class Lexer:
                 tokens.append(Token(K_LPAREN,'OPERATOR',self.position))
             elif self.current == ')':
                 tokens.append(Token(K_RPAREN,'OPERATOR',self.position))
+            elif self.current == '=':
+                tokens.append(Token(K_EQUAL,'OPERATOR',self.position))
             elif self.current == '*':
                 tokens.append(Token(K_MUL,'OPERATOR',self.position))
             elif self.current == '/':
@@ -72,9 +84,16 @@ class Lexer:
                     self.next()
                 tokens.append(Token(T_NUM,float(num),self.position))
                 continue
+            elif self.current in string.ascii_letters:
+                identifier = ''
+                while str(self.current) in string.ascii_letters:
+                    identifier += self.current
+                    self.next()
+                if identifier in K_RESERVED: tokens.append(Token(K_KEYWORD,identifier,self.position))
+                else:tokens.append(Token(K_IDENTIFIER,identifier,self.position))
+                continue
             else:
                 return None,error.UnknownSyntax(self.file_name,f"'{self.current}' is unexpected",self.position,self.line,self.raw)
             self.next()
         tokens.append(Token(S_EOF,'EOF',self.position))
         return tokens,None
-

@@ -9,7 +9,19 @@ class Number:
         return f"{self.token}"
         #return '(N)'
 
+class Variable:
+    def __init__(self,token):
+        self.token = token
+    def __repr__(self):
+        return f'(V|{self.token})'
 
+class CreateVariable:
+    def __init__(self,token,value):
+        self.token=token
+        self.value=value
+
+    def __repr__(self):
+        return f'(C|{self.token},{self.value})'
 class BinaryOperator:
     def __init__(self, left, operator, right):
         self.left = left
@@ -60,7 +72,9 @@ class Parser:
             self.next()
             num = self.level_1()
             return UnaryOperator(temp_token,num)
-        
+        elif temp_token.data_type == lexer.K_IDENTIFIER:
+            self.next()
+            return Variable(temp_token)
         elif temp_token.data_type == lexer.T_NUM:
             self.next()
             if self.current_token.data_type not in (
@@ -85,7 +99,7 @@ class Parser:
             self.next()
             expr = self.level_3()
             if self.current_token.data_type == lexer.K_RPAREN:
-                self.next
+                self.next()
                 return expr
             else:
                 self.error = error.UnknownSyntax(self.file_name,'Expected ")"',self.position,1,self.text)
@@ -96,6 +110,17 @@ class Parser:
         return self.binary_operator(self.level_1, (lexer.K_MUL, lexer.K_DIV))
 
     def level_3(self):
+        if self.current_token.data_type == lexer.K_KEYWORD and self.current_token.value == 'var':
+            self.next()
+            if self.current_token.data_type != lexer.K_IDENTIFIER:
+                return error.UnknownSyntax(self.file_name,'Exxpected an identifier',self.position+1,1,self.text)
+            name = self.current_token
+            self.next()
+            if self.current_token.data_type != lexer.K_EQUAL:
+                return error.UnknownSyntax(self.file_name,'Exxpected a "="',self.position+1,1,self.text)
+            self.next()
+            data = self.level_3()
+            return CreateVariable(name,data)
         return self.binary_operator(self.level_2, (lexer.K_ADD, lexer.K_MIN))
 
     def binary_operator(self, function, operator_token):
@@ -115,8 +140,5 @@ class Parser:
                     self.text,
                 )
             left = BinaryOperator(left, current_operator_token, right)
-        if self.current_token.data_type in (lexer.K_LPAREN):
-            self.error = error.UnknownSyntax(self.file_name,'Misplacement of "(" or ")"',self.position+1,1,self.text)
+        if self.current_token.data_type == lexer.K_LPAREN:self.error = error.UnknownSyntax(self.file_name,'Misplacement of "(" or ")"',self.position+1,1,self.text)
         return left
-
-

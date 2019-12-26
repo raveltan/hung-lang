@@ -19,7 +19,7 @@ In order to install HunG programming language please install the following deped
 2. Python3
 
 Install Termcolor with the following command:
-```bash
+``` bash
 python3 -m pip install termcolor
 ```
 
@@ -28,7 +28,7 @@ Then install the interpreter:
 ``` bash
 git clone https://github.com/raveltan/hung-lang.git
 cd hung-lang
-python3 shell.py
+python3 main.py
 
 ```
 
@@ -40,9 +40,12 @@ python3 shell.py
 2. Error Handling
 3. Parser (AST generator)
 4. Interpreter
+5. Variable
+6. Getting started guide
 
 ## Unimplemented Features
-2. Variable
+1. Comment
+2. String
 3. Conditional Statements
 4. Loops
 5. Functions

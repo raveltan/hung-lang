@@ -20,4 +20,4 @@ class UnknownSyntax(Error):
 
 class RuntimeError(Error):
     def __init__(self,file_name,desc,cursor,line,text):
-        super().__init__('Run Time Error',file_name,desc,cursor,line,text)
+        super().__init__('Runtime Error',file_name,desc,cursor,line,text)
