@@ -1,8 +1,6 @@
 import sys,os
-
 try: 
-    import shell
-    shell.main()
+    import termcolor
 except : 
     print('''    __  __            ______
    / / / /_  ______  / ____/
@@ -21,5 +19,7 @@ except :
         print('\n'+str(result))
         if len(result.split('Successfully installed')) > 1:
             input('Press any key to continue...')
-            os.system('python3 main.py')
-
+            os.system('py main.py' if os.name == 'nt' else 'python3 main.py')
+else:
+    import shell
+    shell.main()

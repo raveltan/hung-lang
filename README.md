@@ -11,26 +11,15 @@ Hung is created to help people to learn programming concept and a stepping stone
 Hung are currently available as technology preview. We have not even reach alpha which means the code can be unstable.
 
 ## Installation Guide
->Hung is a programming language built on top of python, the main requirement is the python itself.
+>HunG is a programming language built on top of python, the main requirement is the python itself.
 
 ### Install & Run
 In order to install HunG programming language please install the following depedencies
 1. Termcolor
-2. Python3
 
-Install Termcolor with the following command:
-``` bash
-python3 -m pip install termcolor
-```
+Then you need to download HunG from this repository and extract it to a folder.
 
-Then install the interpreter:
-
-``` bash
-git clone https://github.com/raveltan/hung-lang.git
-cd hung-lang
-python3 main.py
-
-```
+In order to run HunG interpreter you can run the 'hung' on UNIX or 'hung.bat' or Windows machine.
 
 ## Known Bugs
 - Some Error message may show wrong placement of the cursor
