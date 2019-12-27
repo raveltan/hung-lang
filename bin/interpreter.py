@@ -10,6 +10,8 @@ class SymbolTable:
         self.symbols[name] = data
     def remove(self,name):
         del self.symbols[name]
+    def dump(self):
+        return self.symbols
 
 class Interpreter:
     def __init__(self,ast,file_name,text,symbol_table):
