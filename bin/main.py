@@ -18,8 +18,8 @@ except :
         result = stream[len(stream)-1]
         print('\n'+str(result))
         if len(result.split('Successfully installed')) > 1:
+            print('Please re-run the program!\n')
             input('Press any key to continue...')
-            os.system('py main.py' if os.name == 'nt' else 'python3 main.py')
 else:
     import shell
     shell.main()
