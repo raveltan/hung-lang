@@ -1,7 +1,6 @@
 import lexer,parser,interpreter
-import sys
+import sys,os
 import termcolor
-import os
 from time import sleep
 
 #helper functions
