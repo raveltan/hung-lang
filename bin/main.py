@@ -1,7 +1,8 @@
 import sys,os
 try: 
     import termcolor
-except : 
+except :
+    os.system('cls' if os.name == 'nt' else 'clear')
     print('''    __  __            ______
    / / / /_  ______  / ____/
   / /_/ / / / / __ \/ / __  
