@@ -20,6 +20,5 @@ except :
         result = stream[len(stream)-1]
         print('\n'+str(result))
         if len(result.split('Successfully installed')) > 1:
+            print('\nPlease re-run the program!\n')
             input('Press any key to continue...')
-            os.system('python3 main.py')
-
