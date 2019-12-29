@@ -29,7 +29,7 @@ def title():
  / __  / /_/ / / / / /_/ /  
 /_/ /_/\__,_/_/ /_/\____/   
 ''',color='cyan'))
-    print(termcolor.colored('HunG 0.0.2 (Early Alpha,26-12-2019:21:51:11)',color='cyan'))
+    print(termcolor.colored('HunG 0.0.4 [Alpha,29-12-2019|11.40AM]',color='cyan'))
     print(f'Running on top of Python {sys.version}\nUse .help to view help page\n')
 
 def clear_screen():
