@@ -14,7 +14,7 @@ Hung are currently available as technology preview. We have not even reach alpha
 >HunG is a programming language built on top of python, the main requirement is the python itself.
 
 ### Install & Run
-In order to install HunG programming language please install the following depedencies
+In order to install HunG programming language please install the following depedencies:
 1. Termcolor
 
 Then you need to download HunG from this repository and extract it to a folder.

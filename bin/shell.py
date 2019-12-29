@@ -1,4 +1,4 @@
-import lexer,parser,interpreter
+import lexer,hung_parser,interpreter
 import sys,os
 import termcolor
 from time import sleep
@@ -124,7 +124,7 @@ def main():
             print(l[1])
         else:
             if debug : print('Tokens: ',l[0])
-            p = parser.Parser(l[0],'<HunGConsole>',data).parse()
+            p = hung_parser.Parser(l[0],'<HunGConsole>',data).parse()
             if p[0] == None:
                 print(p[1])
             else:
