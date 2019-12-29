@@ -18,6 +18,6 @@ echo  / __  / /_/ / / / / /_/ /
 echo /_/ /_/\__,_/_/ /_/\____/  
 echo ........................
 echo Unable to run HunG,
-echo Error^: Python not installed
+echo Error^: Python3 not installed
 echo Please install Python3 to run HunG!
 pause
