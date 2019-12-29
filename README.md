@@ -19,7 +19,7 @@ In order to install HunG programming language please install the following deped
 
 Then you need to download HunG from this repository and extract it to a folder.
 
-In order to run HunG interpreter you can run the 'hung' on UNIX or 'hung.bat' or Windows machine.
+In order to run HunG interpreter you can run the 'hung.sh' on UNIX or 'hung.bat' or Windows machine.
 
 ## Known Bugs
 - Some Error message may show wrong placement of the cursor
