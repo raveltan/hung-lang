@@ -66,13 +66,13 @@ class Parser:
         )
 
     def parse(self):
-        result = self.level_3()
+        result = self.level_6()
         return (result, None) if self.error == None else (None, self.error)
 
     def level_1(self):
         temp_token = self.current_token
 
-        if temp_token.data_type in (lexer.K_MIN, lexer.K_ADD):
+        if temp_token.data_type in (lexer.K_MIN, lexer.K_ADD,lexer.K_NOT):
             temp_token = self.current_token
             self.next()
             num = self.level_1()
@@ -85,9 +85,16 @@ class Parser:
             if self.current_token.data_type not in (
                 lexer.K_MIN,
                 lexer.K_ADD,
+                lexer.K_AND,
+                lexer.K_NOT,
+                lexer.K_OR,
                 lexer.K_MUL,
                 lexer.K_DIV,
+                lexer.K_COND_EQUAL,
+                lexer.K_GREATER,
+                lexer.K_SMALLER,
                 lexer.S_EOF,
+                lexer.K_THEN,
                 lexer.K_LPAREN,
                 lexer.K_RPAREN,
             ):
@@ -102,11 +109,11 @@ class Parser:
 
         elif temp_token.data_type == lexer.K_LPAREN:
             self.next()
-            expr = self.level_3()
+            expr = self.level_6()
             if self.current_token.data_type == lexer.K_RPAREN:
                 self.next()
                 return expr
-            else:
+            elif self.current_token.data_type not in [lexer.K_GREATER,lexer.K_SMALLER,lexer.K_COND_EQUAL]:
                 self.error = error.UnknownSyntax(
                     self.file_name, 'Expected ")"', self.position, 1, self.text
                 )
@@ -118,7 +125,7 @@ class Parser:
                 1,
                 self.text,
             )
-
+  
     def level_2(self):
         return self.binary_operator(self.level_1, (lexer.K_MUL, lexer.K_DIV))
 
@@ -131,7 +138,7 @@ class Parser:
             if self.current_token.data_type != lexer.K_IDENTIFIER:
                 return error.UnknownSyntax(
                     self.file_name,
-                    "Exxpected an identifier",
+                    "Expected an identifier",
                     self.position + 1,
                     1,
                     self.text,
@@ -146,6 +153,14 @@ class Parser:
             data = self.level_3()
             return CreateVariable(name, data)
         return self.binary_operator(self.level_2, (lexer.K_ADD, lexer.K_MIN))
+    
+    def level_4(self):
+        return self.binary_operator(self.level_3, (lexer.K_GREATER, lexer.K_SMALLER,lexer.K_COND_EQUAL))
+    def level_5(self):
+        return self. binary_operator(self.level_4,(lexer.K_AND,lexer.K_OR))
+    def level_6(self):
+        return self. binary_operator(self.level_5,(lexer.K_THEN))
+        
 
     def binary_operator(self, function, operator_token):
         left = function()

@@ -13,6 +13,13 @@ K_ADD = "ADD"
 K_EQUAL = "EQUAL"
 K_MIN = "MIN"
 K_MUL = "MUL"
+K_THEN = 'THEN'
+K_AND = 'AND'
+K_OR = 'OR'
+K_NOT = "NOT"
+K_GREATER = "GREATER"
+K_SMALLER = "SMALLER"
+K_COND_EQUAL = "COND_EQUAL"
 K_DIV = "DIV"
 K_IDENTIFIER = "IDENTIFIER"
 K_KEYWORD = "KEYWORD"
@@ -61,8 +68,22 @@ class Lexer:
                 tokens.append(Token(K_MIN, "OPERATOR", self.position))
             elif self.current == "(":
                 tokens.append(Token(K_LPAREN, "OPERATOR", self.position))
+            elif self.current == "~":
+                tokens.append(Token(K_THEN, "OPERATOR", self.position))
             elif self.current == ")":
                 tokens.append(Token(K_RPAREN, "OPERATOR", self.position))
+            elif self.current == ">":
+                tokens.append(Token(K_GREATER, "OPERATOR", self.position))
+            elif self.current == "&":
+                tokens.append(Token(K_AND, "OPERATOR", self.position))
+            elif self.current == "|":
+                tokens.append(Token(K_OR, "OPERATOR", self.position))
+            elif self.current == "!":
+                tokens.append(Token(K_NOT, "OPERATOR", self.position))
+            elif self.current == "<":
+                tokens.append(Token(K_SMALLER, "OPERATOR", self.position))
+            elif self.current == ":":
+                tokens.append(Token(K_COND_EQUAL, "OPERATOR", self.position))
             elif self.current == "=":
                 tokens.append(Token(K_EQUAL, "OPERATOR", self.position))
             elif self.current == "*":
