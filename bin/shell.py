@@ -67,7 +67,7 @@ _(())\_)() /((_)_   )\  )\    )\  ' /((_)
     write_delay(
         "HunG is an interpreted language that is build on top of python3,\nit is created in order to facilitate people who are getting started with programming.\nIt is also created to be as simple as possible in order to achieve this.\n\n"
     )
-    input("Press any key to continue...")
+    input("Press enter to continue...")
     clear_screen()
     print(
         termcolor.colored(
@@ -92,7 +92,7 @@ _(())\_)() /((_)_   )\  )\    )\  ' /((_)
     write_delay(
         "In Hung programming language, the string or str data type are written in single quotation mark.\n\n"
     )
-    input("Press any key to continue...")
+    input("Press enter to continue...")
 
     # end of getting started
     clear_screen()
@@ -112,7 +112,7 @@ _(())\_)() /((_)_   )\  )\    )\  ' /((_)
             color="yellow",
         )
     )
-    input("Press any key to return to interpreter...")
+    input("Press enter to return to interpreter...")
     clear_screen()
     title()
 
