@@ -12,7 +12,7 @@ except:
 /_/ /_/\__,_/_/ /_/\____/   
 """
     )
-    print("HunG 0.0.4 [Alpha,29-12-2019|11.40AM]")
+    print("HunG 0.1.0 [ BETA , 10-1-2020 | 11.40AM ]")
     print("Depedency not satisfied, termcolor not found!\n\n")
     print("Should we attempt to perform installation of [Termcolor]?")
     data = input("Y/N >")

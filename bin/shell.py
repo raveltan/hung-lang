@@ -38,7 +38,7 @@ def title():
             color="cyan",
         )
     )
-    print(termcolor.colored("HunG 0.0.4 [Alpha,29-12-2019|11.40AM]", color="cyan"))
+    print(termcolor.colored("HunG 0.1.0 [ BETA , 10-1-2020 | 11.40AM ]", color="cyan"))
     print(f"Running on top of Python {sys.version}\nUse .help to view help page\n")
 
 
