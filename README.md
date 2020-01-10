@@ -31,13 +31,13 @@ In order to run HunG interpreter you can run the 'hung.sh' on UNIX or 'hung.bat'
 4. Interpreter
 5. Variable
 6. Getting started guide
+7. Conditional Statements
 
 ## Unimplemented Features
 1. Comment
 2. String
-3. Conditional Statements
-4. Loops
-5. Functions
-6. import statements
-7. Multiline supports
+3. Loops
+4. Functions
+5. import statements
+6. Multiline supports
 
