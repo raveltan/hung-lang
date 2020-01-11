@@ -1,8 +1,13 @@
+#####################################################################
+# Lexer(Tokenizer) Classes
+# Contains all errors that can be raised by the HunG Tokenizer/Lexer.
+#####################################################################
+
 # imports
 import error
 import string
 
-# Const
+# Tokenizer Constant
 T_NUM = "NUM"
 T_STR = "STRING"
 
@@ -31,7 +36,7 @@ F_LOG = "LOG"
 S_EOF = "EOF"
 
 
-# Token
+# Token class
 class Token:
     def __init__(self, data_type, value, start):
         self.data_type = data_type
@@ -51,14 +56,14 @@ class Lexer:
         self.position = -1
         self.current = None
         self.next()
-
+    #Advance to the next character in the input stream.
     def next(self):
         # TODO: Change implementation when applying multiline support
         self.position += 1
         self.current = (
             self.raw[self.position] if self.position < len(self.raw) else None
         )
-
+    #Get the input stream and generate tokens.
     def get_tokens(self):
         tokens = []
         while self.current != None:
@@ -100,6 +105,7 @@ class Lexer:
                 while str(self.current) in ".0123456789":
                     if str(self.current) == ".":
                         if decimal_point_count == 1:
+                            #Raise error for num with more than 1 decimal poins
                             return (
                                 None,
                                 error.IllegalSyntax(
@@ -116,11 +122,13 @@ class Lexer:
                 tokens.append(Token(T_NUM, float(num), self.position))
                 continue
             elif self.current in string.ascii_letters:
+                #Create identifier
                 identifier = ""
                 while str(self.current) in string.ascii_letters:
                     identifier += self.current
                     self.next()
                 if identifier in K_RESERVED:
+                    #If the identifier is inside the reserved keyword then it is a keyword.
                     tokens.append(Token(K_KEYWORD, identifier, self.position))
                 else:
                     tokens.append(Token(K_IDENTIFIER, identifier, self.position))

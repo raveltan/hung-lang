@@ -4,6 +4,7 @@ import termcolor
 from time import sleep
 
 # helper functions
+
 def write_delay(text):
     for char in text:
         sleep(0.005)
@@ -69,29 +70,34 @@ _(())\_)() /((_)_   )\  )\    )\  ' /((_)
     )
     input("Press enter to continue...")
     clear_screen()
+    print('Variable & Data Types.')
+    print("Variable is the primary way that allows data to be maniputated.\n\n")
     print(
-        termcolor.colored(
-            """
-                                   )  (       
- (   (     )  (   (      )  ( /(  )\   (  
- )\  )\ ( /(  )(  )\  ( /(  )\())((_) ))\ 
-((_)((_))(_))(()\((_) )(_))((_)\  _  /((_)
-\ \ / /((_)_  ((_)(_)((_)_ | |(_)| |(_))  
- \ V / / _` || '_|| |/ _` || '_ \| |/ -_) 
-  \_/  \__,_||_|  |_|\__,_||_.__/|_|\___| 
-    """,
-            color="yellow",
-        )
-    )
-    write_delay("Variable is the primary way that allows data to be maniputated.\n\n")
-    write_delay(
-        "In HunG, there are only 2 types of variable which is num and str.\nThe are both declared using the var keyword and the type will be auto-magically assigned from the data.\nFor example:\n"
+        "In HunG, there are only 2 types of variable which is num and str.\nThe are both declared using the var keyword and the type will be auto-magically assigned from the data. Currently the only data type which is already implemented is num, in HunG num apply for both integer and float, also the implementation of booleans are done in num (True is 1.0 and False is 0.0).\nFor example:\n"
     )
     print(termcolor.colored("var age = 18", color="cyan"))
     print(termcolor.colored("var name = 'Dai Hung'", color="cyan"))
-    write_delay(
+    print(termcolor.colored("var isMan = 1.0", color="cyan"))
+    print(
         "In Hung programming language, the string or str data type are written in single quotation mark.\n\n"
     )
+    input("Press enter to continue...")
+    print('\nComparator Operator')
+    print('In HunG, the are mainly 3 comparator operator which are greater(>),smaller(<),and equal to(:). There are no greater and equal or smaller and equal, these functionality can be achieved by using bitwise operation. There are 3 bitwise operation that is currently supported by hung, which is NOT(!),AND(&),and OR(|).\n\nThese are the implementation of those operators')
+    print(termcolor.colored("19 > 10 , will result in 1.0", color="cyan"))
+    print(termcolor.colored("19:10 , will result in 0.0", color="cyan"))
+    print(termcolor.colored("19>10 & 10>5 , will result in 1.0", color="cyan"))
+    print(termcolor.colored("(10:100)+5 > 1 , will result in 1.0", color="cyan"))
+
+    input("Press enter to continue...")
+    print('\nConditional Statements')
+    print('In HunG there are currently 1 way of doing conditional staements which is by the "THEN"(~) statemens, this statement can be stacked in order to achieve branching capabilities.')
+    print('The structure is CONDITION ~ RESULT')
+    print('The condition is anything that will result in 1.0 or 0.0 (Boolean)')
+    print('\nThe example of the implementation:')
+    print('10<12~20 , this will result in 20')
+    print('We can also do else statements')
+    print('(10<5~5):0~10 , will result in 10 as 10 is not smaller than 5')
     input("Press enter to continue...")
 
     # end of getting started
@@ -116,7 +122,7 @@ _(())\_)() /((_)_   )\  )\    )\  ' /((_)
     clear_screen()
     title()
 
-
+#Dump all variable with it's value to the terminal
 def var_dump(datas):
     for key, data in datas.items():
         es(key, str(data))
@@ -126,6 +132,7 @@ def var_dump(datas):
 
 def main():
     # main program
+    #create a symbol table for the HunG.
     symbol_table = interpreter.SymbolTable()
     debug = False
     running = True

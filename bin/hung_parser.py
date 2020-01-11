@@ -1,6 +1,16 @@
+#####################################################################
+# Parser-related Classes
+# Contains all classes that is directly corelated to the work of the parser.
+#####################################################################
+
 import lexer, error
 
-# AST
+########################
+# Abstract Syntax Tree(s) / AST
+# Contains AST class that will be created by the parser
+########################
+
+# Number AST Class
 class Number:
     def __init__(self, token):
         self.token = token
@@ -9,7 +19,7 @@ class Number:
         return f"{self.token}"
         # return '(N)'
 
-
+# Variable Access AST Class
 class Variable:
     def __init__(self, token):
         self.token = token
@@ -17,7 +27,7 @@ class Variable:
     def __repr__(self):
         return f"(V|{self.token})"
 
-
+# Variable Create AST Class
 class CreateVariable:
     def __init__(self, token, value):
         self.token = token
@@ -26,7 +36,7 @@ class CreateVariable:
     def __repr__(self):
         return f"(C|{self.token},{self.value})"
 
-
+# AST Class for Binary Operation
 class BinaryOperator:
     def __init__(self, left, operator, right):
         self.left = left
@@ -37,7 +47,7 @@ class BinaryOperator:
         return f"(B|{self.left}, {self.operator}, {self.right})"
         # return f'({self.left},B,{self.right})'
 
-
+# AST Class for Unary Operation
 class UnaryOperator:
     def __init__(self, operator, right):
         self.operator = operator
@@ -48,7 +58,12 @@ class UnaryOperator:
         # return f'(U{self.right})'
 
 
+
+########################
 # Parser
+# Main parser class that will convert tokens to AST.(in order to determine the order of execution).
+########################
+
 class Parser:
     def __init__(self, tokens, file_name, text):
         self.tokens = tokens
@@ -59,29 +74,34 @@ class Parser:
         self.error = None
         self.next()
 
+    #Continue to the next token.
     def next(self):
         self.position += 1
         self.current_token = (
             self.tokens[self.position] if self.position < len(self.tokens) else None
         )
 
+    #Run the recursive AST generating process.
     def parse(self):
         result = self.level_6()
         return (result, None) if self.error == None else (None, self.error)
 
     def level_1(self):
         temp_token = self.current_token
-
+        #Create AST for Unary Operator
         if temp_token.data_type in (lexer.K_MIN, lexer.K_ADD,lexer.K_NOT):
             temp_token = self.current_token
             self.next()
             num = self.level_1()
             return UnaryOperator(temp_token, num)
+        #Create Variable access AST
         elif temp_token.data_type == lexer.K_IDENTIFIER:
             self.next()
             return Variable(temp_token)
+        #Create Number AST
         elif temp_token.data_type == lexer.T_NUM:
             self.next()
+            #Error handling for unwanted pattern
             if self.current_token.data_type not in (
                 lexer.K_MIN,
                 lexer.K_ADD,
@@ -106,7 +126,7 @@ class Parser:
                     self.text,
                 )
             return Number(temp_token)
-
+        #Change order of execution with parentheses.
         elif temp_token.data_type == lexer.K_LPAREN:
             self.next()
             expr = self.level_6()
@@ -127,9 +147,11 @@ class Parser:
             )
   
     def level_2(self):
+        #Create a binary operator AST for multiplication and division.
         return self.binary_operator(self.level_1, (lexer.K_MUL, lexer.K_DIV))
 
     def level_3(self):
+        #Create AST for variable create
         if (
             self.current_token.data_type == lexer.K_KEYWORD
             and self.current_token.value == "var"
@@ -152,16 +174,20 @@ class Parser:
             self.next()
             data = self.level_3()
             return CreateVariable(name, data)
+        #Create AST for addition and substraction.
         return self.binary_operator(self.level_2, (lexer.K_ADD, lexer.K_MIN))
     
     def level_4(self):
+        #Create AST for comparation binary operator.
         return self.binary_operator(self.level_3, (lexer.K_GREATER, lexer.K_SMALLER,lexer.K_COND_EQUAL))
     def level_5(self):
+        #Create AST for Bitwise operation.
         return self. binary_operator(self.level_4,(lexer.K_AND,lexer.K_OR))
     def level_6(self):
+        #Create AST for if statement.
         return self. binary_operator(self.level_5,(lexer.K_THEN))
         
-
+    #Base AST generation for binary based operation.
     def binary_operator(self, function, operator_token):
         left = function()
         while (
