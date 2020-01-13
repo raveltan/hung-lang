@@ -22,7 +22,7 @@ except:
         streams = os.popen(
             "py -m pip install termcolor"
             if os.name == "nt"
-            else "python3 -m pip install termcolor"
+            else "python3 -m pip install termcolor --user"
         )
         stream = streams.readlines()
         result = stream[len(stream) - 1]
