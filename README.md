@@ -1,7 +1,7 @@
-# Hung Programming Language | DEPRECATED
+# Hung Programming Language
 ## PROJECT NO LONGER MAINTANED!!
 ## What is Hung?
-Hung is an interpreted programming langguage cerated by [Ravel Tanjaya](https://www.instagram.com/raveltan) written in python, on current stage the language is run on top of python. In the future we hope to use lvvm and gcc to compile the code to a machine code.
+Hung is an interpreted programming langguage cerated by [Ravel Tanjaya](https://www.instagram.com/raveltanjaya) written in python, on current stage the language is run on top of python. In the future we hope to use lvvm and gcc to compile the code to a machine code.
 
 ### Why Create Hung?
 For poeple who might be new to programming, choosing the right programming language can be quite a hassle, especially when considering that some programming languages are build to be use with certain purpose. That's why we create Hung.<br>
